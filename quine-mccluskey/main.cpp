@@ -2,6 +2,8 @@
  STUDENT NUMBER : 20171686
  NAME : 임성원
  DESCRIPTION : tabular method를 통해 얻는 PI(prime implicant)를 찾기 위한 알고리즘
+
+ 2020/4/25(토요일) : 코드에 대한 주석 추가했습니다.
  * */
 #include <iostream>
 #include <vector>
@@ -55,12 +57,12 @@ int mark(int a, int indexSize, vector<int> idx) {
 int main() {
     vector<int> minInt; //minterms을 10진수로 표현
     vector<string> minBin; //minterms을 2진수로 표현
-    vector<string> newTable;
-    vector<string> primeImp;
-    vector<string> primeImptemp;
-    vector<string> tempTable;
-    vector<int> idx;
-    vector<int> tempidx;
+    vector<string> newTable; //step을 한번 밟고난 값들을 임시로 저장하기 위한 벡터
+    vector<string> primeImp; //최종 PI들의 값들이 저장되어 있는 벡터
+    vector<string> primeImptemp; //최종 벡터의 전 단계 step의 값들이 저장되어 있는 벡터
+    vector<string> tempTable; //더이상 줄일 수 없는 PI의 값들이 모여있는 벡터
+    vector<int> idx; //몇번 째 값이 check가 되었는지 그 값의 인덱스들을 모아놓은 벡터
+    vector<int> tempidx; //idx 벡터의 값들을 저장하기 위한 벡터
 
     //Initialise
     int nBits;
@@ -94,7 +96,7 @@ int main() {
     while (true) {
         tempidx.swap(idx);
         idx.clear();
-        int count = 0;
+        int count = 0; //count가 0이면 한자리만 다른 값들이 없다는 뜻이므로 반복문을 종료한다.
 
         for (int i = 0; i < table.size() - 1; ++i) {
             for (int j = i + 1; j < table.size(); ++j) {
@@ -113,7 +115,7 @@ int main() {
 
 
 
-        tempTable.assign(table.begin(), table.end()); //테이블을 이제 비우기 전에 최종 pi값들을 tempTable에 저장
+        tempTable.assign(table.begin(), table.end()); //테이블을 이제 비우기 전에 최종 단계를 거친 pi값들을 tempTable에 저장
         table.clear(); //table은 newTable의 값들을 저장하기 위해 비우기
         table.resize(newTable.size()); // table의 크기를 재정의함
         //table에 newTable의 값들을 저장
@@ -135,6 +137,7 @@ int main() {
             for(int i=0; i<tempTable.size(); i++) {
                 primeImp.push_back(tempTable[i]);
             }
+            //전 단계에서 체크되지 않은 값들을  포함시키지 않은 완성되지 않은 PI의 값을 출력
             cout << "NOT COMPLETE PI : ";
             for(int i=0; i<primeImp.size(); i++) {
                 cout << primeImp[i] << " ";
@@ -155,6 +158,7 @@ int main() {
             for(int temp=0; temp<primeImptemp.size(); ++temp) {
                 cout << primeImptemp[temp] << ' ';
             }
+            //최종 전 단계의 값들이 저장되어 있는 벡터에서 체크가 된 값들의 인덱스를 출력
             cout << "\nend checked index are : ";
             for(int i=0; i<tempidx.size(); i++) {
                 cout << tempidx[i] << " ";
@@ -171,6 +175,7 @@ int main() {
 
     }
 
+    //최종 PI가 담겨있는 벡터들의 값들을 출력
     cout << "\nSo, all of PI : ";
     for(int i=0; i<primeImp.size(); i++) {
         cout << primeImp[i] << " ";
