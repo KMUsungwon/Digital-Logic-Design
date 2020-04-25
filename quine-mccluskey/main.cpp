@@ -4,6 +4,8 @@
  DESCRIPTION : tabular method를 통해 얻는 PI(prime implicant)를 찾기 위한 알고리즘
 
  2020/4/25(토요일) : 코드에 대한 주석 추가했습니다.
+                     함수에 대한 알고리즘은 https://github.com/mohdomama/Quine-McCluskey/blob/master/tabulation.cpp
+                     사이트의 오픈소스를 참고하였습니다.
  * */
 #include <iostream>
 #include <vector>
